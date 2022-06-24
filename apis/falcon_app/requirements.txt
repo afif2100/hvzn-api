@@ -1,0 +1,5 @@
+pandas
+falcon
+gunicorn
+numpy
+redis
