@@ -61,14 +61,14 @@ class Sentiment(object):
         if isinstance(_clean_text, list):
             result = self.predict(_clean_text)
             for _txt, _ctxt, _res in zip(text, _clean_text, result):
-                _res["text"] = _txt
-                _res["text_clean"] = _ctxt
+                _res.update({"text": _txt, "text_clean": _ctxt})
 
         # if text are string predict single and return single
         else:
             result = self.predict(_clean_text)[0]
             result.update({"text": text, "text_clean": _clean_text})
 
+        # Return payload
         payload = {"result": result}
         resp.status = falcon.HTTP_200
         resp.media = payload

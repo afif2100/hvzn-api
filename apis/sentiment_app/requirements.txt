@@ -5,3 +5,6 @@ numpy
 redis
 pytest
 pytest-cov
+simager
+transformers
+torch>=1.12.0
