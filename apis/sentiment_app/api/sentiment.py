@@ -6,7 +6,7 @@ from simager.preprocess import TextPreprocess
 from helper.base_logger import BaseLogger
 
 logger = BaseLogger(__name__)
-os.environ["MODEL_LOCATION"] = "./model/indosentiment"
+# os.environ["MODEL_LOCATION"] = "./model/indosentiment"
 
 
 class Sentiment(object):

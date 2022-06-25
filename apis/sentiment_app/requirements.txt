@@ -7,4 +7,5 @@ pytest
 pytest-cov
 simager
 transformers
-torch>=1.12.0
+prometheus_client
+torch>=1.11.0

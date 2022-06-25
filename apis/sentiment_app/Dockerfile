@@ -1,9 +1,9 @@
 FROM afif2100/docker-base
-RUN pip install -r requirements.txt
 
 USER $USER
 COPY . $WORKDIR
 
+RUN pip install -r requirements.txt
 ENV PORT=8080
 
-CMD  ["bash", "run_app.sh"]
+CMD ["bash", "run_app.sh"]
