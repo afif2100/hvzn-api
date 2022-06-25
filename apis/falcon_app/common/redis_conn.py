@@ -1,5 +1,5 @@
 import redis
-from common.base_logger import BaseLogger
+from helper.base_loggerimport BaseLogger
 import os
 
 logger = BaseLogger('redis')

@@ -1,5 +1,5 @@
 import psycopg2
-from common.base_logger import BaseLogger
+from helper.base_loggerimport BaseLogger
 
 logger = BaseLogger('postgress')
 

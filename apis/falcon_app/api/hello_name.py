@@ -1,12 +1,11 @@
 import falcon
 import json
-from common.base_logger import BaseLogger
+from helper.base_logger import BaseLogger
 
 log = BaseLogger(__name__)
 
 
 class HelloName(object):
-
     def __init__(self):
         pass
 
@@ -16,7 +15,7 @@ class HelloName(object):
         input_payload = req.get_media()
 
         # get name from input
-        name = input_payload.get('name', None)
+        name = input_payload.get("name", None)
 
         # set output payload
         payload = {"msg": f"Hello, {name}!"}
