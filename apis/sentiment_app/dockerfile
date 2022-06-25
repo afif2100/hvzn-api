@@ -5,6 +5,6 @@ RUN pip install redis
 USER $USER
 COPY . $WORKDIR
 
-# ENV PORT=8080
+ENV PORT=8080
 
 ENTRYPOINT ["bash", "run_app.sh"]
