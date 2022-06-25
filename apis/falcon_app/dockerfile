@@ -3,7 +3,8 @@ RUN pip install -r requirements.txt
 RUN pip install redis
 
 USER $USER
-
 COPY . $WORKDIR
 
-CMD ["bash", "run_app.sh"]
+ENV PORT=8080
+
+ENTRYPOINT ["bash", "run_app.sh"]
