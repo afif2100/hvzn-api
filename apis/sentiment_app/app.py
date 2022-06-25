@@ -1,19 +1,19 @@
 import falcon
 from helper.health import HealthCheck
-from api.hello_name import HelloName
+from api.sentiment import Sentiment
 from middleware import PrometheusMiddleware
 
 prometheus = PrometheusMiddleware()
 app = falcon.App(middleware=prometheus)
 health = HealthCheck()
-Name = HelloName()
+sentiment = Sentiment()
 
 # endpoint
 endpoint_prefix = "api/v1"
 
 # app route
-app.add_route('/health', health)
-app.add_route(f'/{endpoint_prefix}/hello', Name)
+app.add_route("/health", health)
+app.add_route(f"/{endpoint_prefix}/sentiment", sentiment)
 
 # metrics collector
-app.add_route('/metrics', prometheus)
+app.add_route("/metrics", prometheus)
