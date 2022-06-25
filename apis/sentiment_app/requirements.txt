@@ -1,0 +1,11 @@
+pandas
+falcon
+gunicorn
+numpy
+redis
+pytest
+pytest-cov
+simager
+transformers
+prometheus_client
+torch>=1.11.0
