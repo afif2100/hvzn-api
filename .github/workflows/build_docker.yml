@@ -30,16 +30,15 @@ jobs:
         HOST: 'asia.gcr.io'
 
     - name: Build and publish image to GCR
-      uses: docker/build-push-action@v3
-      working-directory: apis/sentiment_app/
+      uses: docker/build-push-action@v2
       with:
-          context: .
-          file: ./Dockerfile
+          context: ./apis/sentiment_app
+          file: ./apis/sentiment_app/Dockerfile
           platforms: linux/amd64
           push: false
           tags: |
-            repo:${{ github.sha }}
-            repo:latest
+            asia.gcr.io/hvzn-development/afif2100/sentiment-app:${{ github.sha }}
+            asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
 
 
 
