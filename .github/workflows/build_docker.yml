@@ -23,18 +23,35 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v0'
 
+    - name: Login Docker
+      uses: 'lagren/docker-gcr-action@master'
+      with:
+        SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_AUTH }}
+        HOST: 'asia.gcr.io'
 
     - name: Build and publish image to GCR
-      uses: kurkop/push-docker-gcr@v1.2.2
+      uses: docker/build-push-action@v3
       working-directory: apis/sentiment_app/
       with:
-        docker_image_name: asia.gcr.io/hvzn-development/afif2100/sentiment-app
-        docker_image_tag: latest
-        docker_context: .
-        dockerfile: Dockerfile
-        gcr_host: asia.gcr.io
-        gcr_project_id: hvzn-development
-        gcr_service_key: ${{ secrets.GCLOUD_AUTH }}
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: false
+          tags: |
+            repo:${{ github.sha }}
+            repo:latest
+
+
+
+
+      # with:
+      #   docker_image_name: asia.gcr.io/hvzn-development/afif2100/sentiment-app
+      #   docker_image_tag: latest
+      #   docker_context: .
+      #   dockerfile: Dockerfile
+      #   gcr_host: asia.gcr.io
+      #   gcr_project_id: hvzn-development
+      #   gcr_service_key: ${{ secrets.GCLOUD_AUTH }}
 
     # - name: Build and publish image to GCR
     #   uses: carbonchain/action-container-registry@v1.1
