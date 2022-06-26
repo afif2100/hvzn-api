@@ -26,10 +26,11 @@ jobs:
 
     - name: Build and publish image to GCR
       uses: kurkop/push-docker-gcr@v1.2.2
+      working-directory: apis/sentiment_app/
       with:
         docker_image_name: asia.gcr.io/hvzn-development/afif2100/sentiment-app
         docker_image_tag: latest
-        docker_context: apis/sentiment_app/Dockerfile
+        docker_context: .
         dockerfile: Dockerfile
         gcr_host: asia.gcr.io
         gcr_project_id: hvzn-development
