@@ -29,7 +29,7 @@ jobs:
       with:
         docker_image_name: asia.gcr.io/hvzn-development/afif2100/sentiment-app
         docker_image_tag: latest
-        docker_context: apis/sentiment_app/
+        docker_context: ./apis/sentiment_app/
         gcr_host: gcr.io
         gcr_project_id: hvzn-development
         gcr_service_key: ${{ secrets.GCLOUD_AUTH }}
