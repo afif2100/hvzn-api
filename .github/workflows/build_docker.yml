@@ -1,5 +1,5 @@
 
-name: Github Action auth GCS
+name: sentiment-app/build
 
 on:
   - pull_request
@@ -7,9 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.8']
 
     permissions:
       contents: 'read'
@@ -31,3 +28,20 @@ jobs:
 
     - name: 'Use gsutil LS'
       run: 'gsutil ls gs://hvzn-gcs-us-1'
+
+    - name: Build and publish image to GCR
+      uses: carbonchain/action-container-registry@v1.1
+      with:
+        project_id: hvzn-development
+        dockerfile: apis/sentiment_app/Dockerfile
+        image: asia.gcr.io/hvzn-development/afif2100/sentiment-app
+        service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
+    # - id: 'deploy'
+    #   uses: 'google-github-actions/deploy-cloudrun@v0'
+    #   with:
+    #     service: 'hello-cloud-run'
+    #     image: "asia.gcr.io/hvzn-development/afif2100/sentiment-app"
+
+    # - name: 'Use output'
+    #   run: 'curl "${{ steps.deploy.outputs.url }}"'
