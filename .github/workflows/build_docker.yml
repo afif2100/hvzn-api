@@ -30,36 +30,15 @@ jobs:
         HOST: 'asia.gcr.io'
 
     - name: Build and publish image to GCR
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3
       with:
           context: ./apis/sentiment_app
           file: ./apis/sentiment_app/Dockerfile
           platforms: linux/amd64
-          push: false
+          push: true
           tags: |
             asia.gcr.io/hvzn-development/afif2100/sentiment-app:${{ github.sha }}
             asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
-
-
-
-
-      # with:
-      #   docker_image_name: asia.gcr.io/hvzn-development/afif2100/sentiment-app
-      #   docker_image_tag: latest
-      #   docker_context: .
-      #   dockerfile: Dockerfile
-      #   gcr_host: asia.gcr.io
-      #   gcr_project_id: hvzn-development
-      #   gcr_service_key: ${{ secrets.GCLOUD_AUTH }}
-
-    # - name: Build and publish image to GCR
-    #   uses: carbonchain/action-container-registry@v1.1
-    #   with:
-    #     project_id: hvzn-development
-    #     dockerfile: apis/sentiment_app/Dockerfile
-    #     image: asia.gcr.io/hvzn-development/afif2100/sentiment-app
-    #     service_account_key: ${{ secrets.GCLOUD_AUTH }}
-
 
 
     # - id: 'deploy'
