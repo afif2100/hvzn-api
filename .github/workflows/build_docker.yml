@@ -31,7 +31,8 @@ jobs:
     #     image: asia.gcr.io/hvzn-development/afif2100/sentiment-app
     #     service_account_key: ${{ secrets.GCLOUD_AUTH }}
 
-    - uses: Industrial/push-docker-gcr
+    - name: Build and publish image to GCR
+      uses: Industrial/push-docker-gcr
       with:
         docker_image_name: asia.gcr.io/hvzn-development/afif2100/sentiment-app
         docker_image_tag: latest
