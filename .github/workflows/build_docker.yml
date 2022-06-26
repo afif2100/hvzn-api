@@ -29,7 +29,7 @@ jobs:
       with:
         docker_image_name: asia.gcr.io/hvzn-development/afif2100/sentiment-app
         docker_image_tag: latest
-        docker_context: ./apis/sentiment_app/Dockerfile
+        docker_context: apis/sentiment_app/Dockerfile
         dockerfile: Dockerfile
         gcr_host: asia.gcr.io
         gcr_project_id: hvzn-development
