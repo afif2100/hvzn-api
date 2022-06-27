@@ -25,9 +25,6 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v0'
 
-    - name: 'Use gcloud CLI'
-      run: 'gcloud info'
-
     - name: Login Docker
       uses: 'lagren/docker-gcr-action@master'
       with:
