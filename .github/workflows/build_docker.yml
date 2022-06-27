@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: build docker and push
     runs-on: ubuntu-latest
 
     permissions:
@@ -43,6 +44,7 @@ jobs:
             asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
 
   deploy:
+    name: deploy docker on cloud run
     needs: build
     runs-on: ubuntu-latest
 
