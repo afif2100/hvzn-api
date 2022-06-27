@@ -52,7 +52,7 @@ jobs:
         image: 'asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest'
 
     - name: 'Use output'
-      run: 'curl "${{ steps.deploy.outputs.url }}"'
+      run: 'curl "${{ steps.deploy.outputs.url }}/health"'
 
 
 
