@@ -2,7 +2,9 @@
 name: sentiment-app/build_and_deploy
 
 on:
-  - pull_request
+  pull_request:
+    paths:
+      - 'apis/sentiment_app/*'
 
 jobs:
   build_and_deploy:
@@ -26,22 +28,22 @@ jobs:
     - name: 'Use gcloud CLI'
       run: 'gcloud info'
 
-    # - name: Login Docker
-    #   uses: 'lagren/docker-gcr-action@master'
-    #   with:
-    #     SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_AUTH }}
-    #     HOST: 'asia.gcr.io'
+    - name: Login Docker
+      uses: 'lagren/docker-gcr-action@master'
+      with:
+        SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_AUTH }}
+        HOST: 'asia.gcr.io'
 
-    # - name: Build and publish image to GCR
-    #   uses: docker/build-push-action@v3
-    #   with:
-    #       context: ./apis/sentiment_app
-    #       file: ./apis/sentiment_app/Dockerfile
-    #       platforms: linux/amd64
-    #       push: true
-    #       tags: |
-    #         asia.gcr.io/hvzn-development/afif2100/sentiment-app:${{ github.sha }}
-    #         asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
+    - name: Build and publish image to GCR
+      uses: docker/build-push-action@v3
+      with:
+          context: ./apis/sentiment_app
+          file: ./apis/sentiment_app/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            asia.gcr.io/hvzn-development/afif2100/sentiment-app:${{ github.sha }}
+            asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
 
     - id: 'deploy'
       uses: 'google-github-actions/deploy-cloudrun@v0'
