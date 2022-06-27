@@ -1,5 +1,5 @@
 
-name: sentiment-app/build
+name: sentiment-app/build_and_deploy
 
 on:
   - pull_request
@@ -23,29 +23,28 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v0'
 
-    - name: Login Docker
-      uses: 'lagren/docker-gcr-action@master'
-      with:
-        SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_AUTH }}
-        HOST: 'asia.gcr.io'
-
-    - name: Build and publish image to GCR
-      uses: docker/build-push-action@v3
-      with:
-          context: ./apis/sentiment_app
-          file: ./apis/sentiment_app/Dockerfile
-          platforms: linux/amd64
-          push: true
-          tags: |
-            asia.gcr.io/hvzn-development/afif2100/sentiment-app:${{ github.sha }}
-            asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
-
-
-    # - id: 'deploy'
-    #   uses: 'google-github-actions/deploy-cloudrun@v0'
+    # - name: Login Docker
+    #   uses: 'lagren/docker-gcr-action@master'
     #   with:
-    #     service: 'hello-cloud-run'
-    #     image: "asia.gcr.io/hvzn-development/afif2100/sentiment-app"
+    #     SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_AUTH }}
+    #     HOST: 'asia.gcr.io'
 
-    # - name: 'Use output'
-    #   run: 'curl "${{ steps.deploy.outputs.url }}"'
+    # - name: Build and publish image to GCR
+    #   uses: docker/build-push-action@v3
+    #   with:
+    #       context: ./apis/sentiment_app
+    #       file: ./apis/sentiment_app/Dockerfile
+    #       platforms: linux/amd64
+    #       push: true
+    #       tags: |
+    #         asia.gcr.io/hvzn-development/afif2100/sentiment-app:${{ github.sha }}
+    #         asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
+
+    - name: Deploy service to Cloud Run
+      uses: stefda/action-cloud-run@v1.6
+      with:
+        image: asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
+        service: afif2100-sentiment-app
+        project: hvzn-development
+        region: asia-southeast2
+        service key: ${{ secrets.GCLOUD_AUTH }}
