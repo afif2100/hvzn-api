@@ -7,7 +7,7 @@ on:
       - 'apis/sentiment_app/*'
 
 jobs:
-  build_and_deploy:
+  build:
     runs-on: ubuntu-latest
 
     permissions:
@@ -44,6 +44,22 @@ jobs:
           tags: |
             asia.gcr.io/hvzn-development/afif2100/sentiment-app:${{ github.sha }}
             asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    - id: auth
+      uses: google-github-actions/auth@v0
+      with:
+        workload_identity_provider: 'projects/110817751945/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-pool-provider-2'
+        service_account: 'mlflow-user@hvzn-development.iam.gserviceaccount.com'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v0'
 
     - id: 'deploy'
       uses: 'google-github-actions/deploy-cloudrun@v0'
