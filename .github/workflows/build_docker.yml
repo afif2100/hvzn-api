@@ -40,11 +40,24 @@ jobs:
     #         asia.gcr.io/hvzn-development/afif2100/sentiment-app:${{ github.sha }}
     #         asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
 
-    - name: Deploy service to Cloud Run
-      uses: stefda/action-cloud-run@v1.6
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-cloudrun@v0'
       with:
-        image: asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
-        service: afif2100-sentiment-app
-        project: hvzn-development
+        project_id: 'hvzn-development'
+        service: 'afif2100-sentiment-app'
         region: asia-southeast2
-        service key: ${{ secrets.GCLOUD_AUTH }}
+        image: 'asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest'
+
+    - name: 'Use output'
+      run: 'curl "${{ steps.deploy.outputs.url }}"'
+
+
+
+    # - name: Deploy service to Cloud Run
+    #   uses: stefda/action-cloud-run@v1.6
+    #   with:
+    #     image: asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
+    #     service: afif2100-sentiment-app
+    #     project: hvzn-development
+    #     region: asia-southeast2
+    #     service key: ${{ secrets.GCLOUD_AUTH }}
