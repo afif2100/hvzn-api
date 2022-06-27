@@ -46,6 +46,7 @@ jobs:
             asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
 
     permissions:
