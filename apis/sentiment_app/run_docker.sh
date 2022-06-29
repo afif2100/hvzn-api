@@ -1,11 +1,15 @@
 #bin/bash
 export REGISTRY=asia.gcr.io/hvzn-development/afif2100/sentiment-app
+export TAG=latest
 
-# if build
-# if [ $1 "BUILD" ]
+docker build --no-cache -t ${REGISTRY}:${TAG} .
+docker push ${REGISTRY}:${TAG}
+
+
+# if [[ $1  -eq  "build" ]]
 # then
-docker build --no-cache -t ${REGISTRY}:latest .
-# if push
-docker push ${REGISTRY}:latest
-# if run
-# docker run -d -p 8000:8000 ${REGISTRY}:latest 
+#     docker build --no-cache -t ${REGISTRY}:${TAG} .
+# elif [[ $1  -eq "push" ]]
+# then
+#     docker push ${REGISTRY}:${TAG}
+# fi
