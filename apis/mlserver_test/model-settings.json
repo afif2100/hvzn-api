@@ -1,0 +1,8 @@
+{
+    "name": "generate-random-text",
+    "implementation": "models.GenerateRandomText",
+    "parameters": {
+        "uri": "./dummy-model.json",
+        "version": "v1"
+    }
+}

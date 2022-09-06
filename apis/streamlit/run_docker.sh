@@ -10,7 +10,7 @@ echo "doker $1 : ${IMAGE_URI}"
 if [ "$1" == "build" ]; then
     docker build --rm -t ${IMAGE_URI} . 
 elif [ "$1" == "run" ]; then
-    docker run -it -p 8001:80 --rm ${IMAGE_URI} $2
+    docker run -it -p 8000:8501 --rm ${IMAGE_URI} $2
 elif [ "$1" == "push" ]; then
     docker push ${IMAGE_URI}
 elif [ "$1" == "pull" ]; then
