@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: flower-app
-        image: docker.io/afif2100/flower-app
+        image: docker.io/afif2100/flower-app:latest
         readinessProbe:
           initialDelaySeconds: 30
           periodSeconds: 10
@@ -52,7 +52,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: flower-gateways
+  name: flower-gateway
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -73,7 +73,7 @@ spec:
   hosts:
   - "*"
   gateways:
-  - flower-gateways
+  - flower-gateway
   http:
   - match:
     - uri:
