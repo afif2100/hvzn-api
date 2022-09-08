@@ -1,0 +1,9 @@
+pandas
+falcon
+gunicorn
+numpy
+redis
+pytest
+pytest-cov
+tensorflow
+pillow

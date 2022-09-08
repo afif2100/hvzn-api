@@ -1,0 +1,90 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flower-app-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: flower-app
+  ports:
+  - port: 9000
+    targetPort: 9000
+    nodePort: 30001
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flower-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flower-app
+  template:
+    metadata:
+      labels:
+        app: flower-app
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: "false"
+    spec:
+      containers:
+      - name: flower-app
+        image: docker.io/afif2100/flower-app
+        readinessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 2
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 9000
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: 4000Mi
+
+--- 
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: flower-gateways
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: flower
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - flower-gateways
+  http:
+  - match:
+    - uri:
+        prefix: /flower/
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: flower-app-entrypoint.default.svc.cluster.local
+        port:
+          number: 9000
+
+# [success] kubectl port-forward svc/flower-app-entrypoint 9000:9000
+# [success] kubectl port-forward -n istio-system svc/istio-ingressgateway 9000:80
