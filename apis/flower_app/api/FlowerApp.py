@@ -1,4 +1,5 @@
 from asyncio.log import logger
+from pickle import TRUE
 import falcon
 import tensorflow as tf
 import numpy as np
@@ -8,6 +9,7 @@ from io import BytesIO
 from PIL import Image
 import numpy as np
 import time
+import os
 
 log = BaseLogger(__name__)
 
@@ -49,7 +51,11 @@ class FlowerPrediction(object):
         return X
 
     def _image_downloader(self, url):
-        im = Image.open(requests.get(url, stream=True).raw)
+
+        if os.environ["IMAGE_DEBUG"]:
+            im = Image.open("example/img.jpg")
+        else:
+            im = Image.open(requests.get(url, stream=True).raw)
         return im
 
     def on_post(self, req, resp):

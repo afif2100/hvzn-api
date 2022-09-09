@@ -2,7 +2,7 @@
 export PROJECT_ID=hvzn-development
 export REPO_NAME=afif2100
 export IMAGE_NAME=flower-app
-export IMAGE_TAG=latest
+export IMAGE_TAG=gpu
 # export IMAGE_URI=asia.gcr.io/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
 export IMAGE_URI=${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
 
