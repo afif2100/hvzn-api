@@ -16,6 +16,11 @@ log = BaseLogger(__name__)
 
 class FlowerPrediction(object):
     def __init__(self) -> None:
+        gpus = tf.config.experimental.list_physical_devices('GPU')
+        for gpu in gpus:
+            # set memory growth
+            tf.config.experimental.set_memory_growth(gpu, True)
+
         self.model_location = "model/"
         self.loaded = False
 
