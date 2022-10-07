@@ -63,7 +63,7 @@ def login_instagram(USER):
 
 # get url from input
 POST_URL_DEFAULT = "https://www.instagram.com/p/CgJ0WZNggfB/"
-url_post = text_field("Post Url", value= POST_URL_DEFAULT)
+url_post = text_field("Post Url", value=POST_URL_DEFAULT)
 _get_comment = st.checkbox("Get Comment")
 
 if st.button("Get Post"):
@@ -94,8 +94,9 @@ if st.button("Get Post"):
             df = df[["id", "created_at_utc", "text", "owner", "likes_count"]]
             st.write(df)
 
-            st_download_df(f"instagram_comment_{post.owner_username}_{SHORTCODE}.csv",)
-
+            st_download_df(
+                f"instagram_comment_{post.owner_username}_{SHORTCODE}.csv",
+            )
 
     if post.mediacount == 1:
         with st.expander(f"See images"):
