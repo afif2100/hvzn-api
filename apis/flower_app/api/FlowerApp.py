@@ -46,13 +46,12 @@ class FlowerPrediction(object):
         img_arr = (np.array(nimg)) / 255
         return img_arr
 
-    def reshape(self, imgs_arr):
-        return np.stack(imgs_arr, axis=0)
-
     def _read_process(self, path):
         im = self._image_downloader(path)
         X = self.preprocess(im, self.input_size)
-        X = self.reshape([X])
+        
+        # Reshape
+        X = np.stack([X], axis=0)
         return X
 
     def _image_downloader(self, url):
