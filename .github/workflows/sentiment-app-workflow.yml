@@ -21,6 +21,7 @@ jobs:
     - id: auth
       uses: google-github-actions/auth@v0
       with:
+        token_format: 'access_token'
         workload_identity_provider: 'projects/110817751945/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-pool-provider-2'
         service_account: 'mlflow-user@hvzn-development.iam.gserviceaccount.com'
 
