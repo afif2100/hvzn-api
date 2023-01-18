@@ -32,6 +32,17 @@ jobs:
             cd ./apis/sentiment_app && python helper/model_download.py
             pytest --cov=api --cov-report term-missing
 
+  check:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: khan/pull-request-comment-trigger@v1.1.0
+          id: check
+          with:
+            trigger: '@deploy'
+            reaction: rocket
+        - run: 'echo Found it!'
+          if: steps.check.outputs.triggered == 'true'
+
   build:
     name: build docker and push
     needs: test
@@ -42,6 +53,7 @@ jobs:
       id-token: 'write'
 
     steps:
+    - if: steps.check.outputs.triggered == 'true'
     - uses: actions/checkout@v3
     - id: auth
       uses: google-github-actions/auth@v0
