@@ -28,10 +28,11 @@ jobs:
       uses: 'google-github-actions/setup-gcloud@v0'
 
     - name: Login Docker
-      uses: 'lagren/docker-gcr-action@master'
+      uses: docker/login-action@v2
       with:
-        SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_AUTH }}
-        HOST: 'asia.gcr.io'
+        registry: 'asia.gcr.io'
+        username: oauth2accesstoken
+        password: ${{ steps.auth.outputs.access_token }}
 
     - name: Build and publish image to GCR
       uses: docker/build-push-action@v3
