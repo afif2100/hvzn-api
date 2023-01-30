@@ -22,7 +22,7 @@ async def predict(payload: dict = Body(...)):
     data = np.array([data])
 
     # Load the model
-    model = joblib.load('model.pkl')
+    model = joblib.load('model/model.pkl')
 
     # Make the prediction
     prediction = model.predict(data)
