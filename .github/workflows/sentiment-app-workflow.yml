@@ -34,7 +34,6 @@ jobs:
 
   build:
     name: build docker and push
-    needs: test
     runs-on: ubuntu-latest
 
     permissions:
