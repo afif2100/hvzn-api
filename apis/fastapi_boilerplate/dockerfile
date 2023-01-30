@@ -1,0 +1,11 @@
+FROM afif2100/docker-base
+RUN pip install -r requirements.txt
+RUN pip install redis
+
+USER $USER
+COPY . $WORKDIR
+
+RUN pip install -r requirements.txt
+# ENV PORT=8080
+
+ENTRYPOINT ["make", "run-app"]
