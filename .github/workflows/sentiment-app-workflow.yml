@@ -1,43 +1,41 @@
-
 name: sentiment-app/build_and_deploy
 
 on:
   pull_request:
     paths:
-      - 'apis/sentiment_app/*'
+      - "apis/sentiment_app/*"
 
 jobs:
-
   build:
     name: build docker and push
     runs-on: ubuntu-latest
 
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
 
     steps:
-    - uses: actions/checkout@v3
-    - id: auth
-      uses: google-github-actions/auth@v0
-      with:
-        token_format: 'access_token'
-        workload_identity_provider: 'projects/110817751945/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-pool-provider-2'
-        service_account: 'mlflow-user@hvzn-development.iam.gserviceaccount.com'
+      - uses: actions/checkout@v3
+      - id: auth
+        uses: google-github-actions/auth@v0
+        with:
+          token_format: "access_token"
+          workload_identity_provider: "projects/110817751945/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-pool-provider-2"
+          service_account: "mlflow-user@hvzn-development.iam.gserviceaccount.com"
 
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v0'
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v0"
 
-    - name: Login Docker
-      uses: docker/login-action@v2
-      with:
-        registry: 'asia.gcr.io'
-        username: oauth2accesstoken
-        password: ${{ steps.auth.outputs.access_token }}
+      - name: Login Docker
+        uses: docker/login-action@v2
+        with:
+          registry: "asia.gcr.io"
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
 
-    - name: Build and publish image to GCR
-      uses: docker/build-push-action@v3
-      with:
+      - name: Build and publish image to GCR
+        uses: docker/build-push-action@v3
+        with:
           context: ./apis/sentiment_app
           file: ./apis/sentiment_app/Dockerfile
           platforms: linux/amd64
@@ -52,25 +50,25 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
 
     steps:
-    - id: auth
-      uses: google-github-actions/auth@v0
-      with:
-        workload_identity_provider: 'projects/110817751945/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-pool-provider-2'
-        service_account: 'mlflow-user@hvzn-development.iam.gserviceaccount.com'
+      - id: auth
+        uses: google-github-actions/auth@v0
+        with:
+          workload_identity_provider: "projects/110817751945/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-pool-provider-2"
+          service_account: "mlflow-user@hvzn-development.iam.gserviceaccount.com"
 
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v0'
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v0"
 
-    - id: 'deploy'
-      uses: 'google-github-actions/deploy-cloudrun@v0'
-      with:
-        service: 'afif2100-sentiment-app'
-        region: asia-southeast2
-        image: 'asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest'
+      - id: "deploy"
+        uses: "google-github-actions/deploy-cloudrun@v0"
+        with:
+          service: "afif2100-sentiment-app"
+          region: asia-southeast2
+          image: "asia.gcr.io/hvzn-development/afif2100/sentiment-app:latest"
 
-    - name: 'Use output'
-      run: 'curl "${{ steps.deploy.outputs.url }}/health"'
+      - name: "Use output"
+        run: 'curl "${{ steps.deploy.outputs.url }}/health"'
