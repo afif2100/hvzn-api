@@ -40,17 +40,6 @@ jobs:
           dockerfile: ./apis/fastapi_boilerplate/dockerfile
           context: ./apis/fastapi_boilerplate
 
-      # - name: Build and publish image to GCR
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     context: ./apis/$FOLDER_NAME
-      #     file: ./apis/$FOLDER_NAME/Dockerfile
-      #     platforms: linux/amd64
-      #     push: true
-      #     tags: |
-      #       asia.gcr.io/hvzn-development/afif2100/$APP_NAME:${{ github.sha }}
-      #       asia.gcr.io/hvzn-development/afif2100/$APP_NAME:latest
-
   deploy:
     name: deploy docker on cloud run
     needs: build
@@ -73,9 +62,9 @@ jobs:
       - id: "deploy"
         uses: "google-github-actions/deploy-cloudrun@v0"
         with:
-          service: "$SERVICE_NAME"
+          service: afif2100-fastapi-app
           region: asia-southeast2
-          image: "asia.gcr.io/hvzn-development/afif2100/$APP_NAME:latest"
+          image: "asia.gcr.io/hvzn-development/afif2100/fastapi-app:latest"
 
       - name: "Use output"
         run: 'curl "${{ steps.deploy.outputs.url }}/health"'
