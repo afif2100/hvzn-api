@@ -35,7 +35,7 @@ jobs:
           # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
           registry: asia.gcr.io
           project_id: hvzn-development
-          image_name: afif2100/$APP_NAME
+          image_name: afif2100/fastapi-app
           image_tag: latest,${{ github.sha }}
           dockerfile: ./apis/$FOLDER_NAME/Dockerfile
           context: ./apis/$FOLDER_NAME
