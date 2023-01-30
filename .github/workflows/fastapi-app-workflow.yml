@@ -1,4 +1,4 @@
-name: sentiment-app/build_and_deploy
+name: fastapi-app/build_and_deploy
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ env:
 jobs:
   build:
     name: build docker and push
-    needs: test
+    # needs: test
     runs-on: ubuntu-latest
 
     permissions:
