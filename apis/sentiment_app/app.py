@@ -7,6 +7,7 @@ prometheus = PrometheusMiddleware()
 app = falcon.App(middleware=prometheus)
 health = HealthCheck()
 sentiment = Sentiment()
+print("ok")
 
 # endpoint
 endpoint_prefix = "api/v1"

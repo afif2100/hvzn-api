@@ -1,0 +1,5 @@
+{
+    "debug": "true",
+    "http_port" : 9001,
+    "grpc_port" : 9002
+}
