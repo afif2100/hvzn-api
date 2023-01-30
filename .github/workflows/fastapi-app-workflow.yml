@@ -37,7 +37,7 @@ jobs:
           project_id: hvzn-development
           image_name: afif2100/fastapi-app
           image_tag: latest,${{ github.sha }}
-          dockerfile: ./apis/fastapi_boilerplate/Dockerfile
+          dockerfile: ./apis/fastapi_boilerplate/dockerfile
           context: ./apis/fastapi_boilerplate
 
       # - name: Build and publish image to GCR
