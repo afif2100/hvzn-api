@@ -3,7 +3,7 @@ IMAGE_NAME=my_image
 TAG=latest
 PORT=8000
 
-run-app:
+app:
 	gunicorn $(APP_FILE):app -b 0.0.0.0:$(PORT) -k uvicorn.workers.UvicornWorker
 
 build:
