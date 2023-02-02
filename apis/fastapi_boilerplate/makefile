@@ -1,5 +1,5 @@
 APP_FILE=app
-IMAGE_NAME=my_image
+IMAGE_NAME=gcr.io/fastapi-app/app
 TAG=latest
 PORT=8000
 
