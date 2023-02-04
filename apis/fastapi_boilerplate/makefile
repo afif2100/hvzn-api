@@ -5,7 +5,7 @@ TAG=latest
 PORT=8000
 
 app:
-	uvicorn $(APP_FILE):app --host 0.0.0.0 --port $(PORT) --reload
+	uvicorn $(APP_FILE):app --host 0.0.0.0 --port $(PORT) --reload --workers 10
 # gunicorn $(APP_FILE):app -b 0.0.0.0:$(PORT) -k uvicorn.workers.UvicornWorker --reload
 
 build:
