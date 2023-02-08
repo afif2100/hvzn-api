@@ -3,8 +3,9 @@ IMAGE_NAME=my_image
 TAG=latest
 PORT=8000
 
-run-app:
+app:
 	uvicorn $(APP_FILE):app --host 0.0.0.0 --port $(PORT) --reload --workers 10
+
 build:
 	docker build -t $(IMAGE_NAME):$(TAG) .
 
