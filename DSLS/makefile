@@ -4,7 +4,7 @@ TAG=latest
 PORT=8000
 
 app:
-	uvicorn $(APP_FILE):app --host 0.0.0.0 --port $(PORT) --reload --workers 10
+	uvicorn $(APP_FILE):app --host 0.0.0.0 --port $(PORT) --reload --workers 2
 
 build:
 	docker build -t $(IMAGE_NAME):$(TAG) .
