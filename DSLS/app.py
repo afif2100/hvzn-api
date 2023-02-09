@@ -15,3 +15,11 @@ def home():
 async def health_check():
     return {"status": "healthy"}
 
+class PredictSalary():
+    
+    def __init__(self) -> None:
+        self.base_salary = 5000000
+        self.age_salary_multiplier = 50000
+        
+    def calculate_salary(self, age):
+        return self.base_salary + (age * self.age_salary_multiplier)
