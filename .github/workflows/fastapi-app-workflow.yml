@@ -1,4 +1,4 @@
-name: sentiment-app/build_and_deploy
+name: fastapi-app/build_and_deploy
 
 on:
   pull_request:
@@ -13,7 +13,6 @@ env:
 jobs:
   build:
     name: build docker and push
-    needs: test
     runs-on: ubuntu-latest
 
     permissions:
@@ -25,28 +24,21 @@ jobs:
       - id: auth
         uses: google-github-actions/auth@v0
         with:
-          workload_identity_provider: "projects/110817751945/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-pool-provider-2"
-          service_account: "mlflow-user@hvzn-development.iam.gserviceaccount.com"
+          workload_identity_provider: ${{ vars.WORKLOAD_IDENTITIY_PROVIDER }}
+          service_account: ${{ vars.SERVICE_ACCOUNT_NAME }}
 
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v0"
 
-      - name: Login Docker
-        uses: "lagren/docker-gcr-action@master"
+      - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
-          SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_AUTH }}
-          HOST: "asia.gcr.io"
-
-      - name: Build and publish image to GCR
-        uses: docker/build-push-action@v3
-        with:
-          context: ./apis/$FOLDER_NAME
-          file: ./apis/$FOLDER_NAME/Dockerfile
-          platforms: linux/amd64
-          push: true
-          tags: |
-            asia.gcr.io/hvzn-development/afif2100/$APP_NAME:${{ github.sha }}
-            asia.gcr.io/hvzn-development/afif2100/$APP_NAME:latest
+          # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
+          registry: asia.gcr.io
+          project_id: hvzn-development
+          image_name: afif2100/fastapi-app
+          image_tag: latest,${{ github.sha }}
+          dockerfile: ./apis/fastapi_boilerplate/dockerfile
+          context: ./apis/fastapi_boilerplate
 
   deploy:
     name: deploy docker on cloud run
@@ -61,8 +53,8 @@ jobs:
       - id: auth
         uses: google-github-actions/auth@v0
         with:
-          workload_identity_provider: "projects/110817751945/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-pool-provider-2"
-          service_account: "mlflow-user@hvzn-development.iam.gserviceaccount.com"
+          workload_identity_provider: ${{ vars.WORKLOAD_IDENTITIY_PROVIDER }}
+          service_account: ${{ vars.SERVICE_ACCOUNT_NAME }}
 
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v0"
@@ -70,9 +62,9 @@ jobs:
       - id: "deploy"
         uses: "google-github-actions/deploy-cloudrun@v0"
         with:
-          service: "$SERVICE_NAME"
+          service: afif2100-fastapi-app
           region: asia-southeast2
-          image: "asia.gcr.io/hvzn-development/afif2100/$APP_NAME:latest"
+          image: "asia.gcr.io/hvzn-development/afif2100/fastapi-app:latest"
 
       - name: "Use output"
         run: 'curl "${{ steps.deploy.outputs.url }}/health"'

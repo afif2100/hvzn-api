@@ -20,6 +20,8 @@ async def predict(payload: dict = Body(...)):
     # Get body content
     data = payload['data']
     data = np.array([data])
+    print(data)
+
 
     # Load the model
     model = joblib.load('model/model.pkl')
