@@ -1,7 +1,9 @@
 name: fastapi-app/build_and_deploy
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
     paths:
       - "apis/fastapi_boilerplate/*"
 
