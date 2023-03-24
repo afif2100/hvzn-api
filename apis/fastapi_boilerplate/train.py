@@ -5,6 +5,8 @@ from sklearn import metrics
 import pandas as pd
 import joblib
 
+
+# Run in name called
 if __name__ == "__main__":
     # Load the diabetes dataset
     df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv")
