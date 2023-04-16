@@ -9,13 +9,17 @@ import joblib
 # Run in name called
 if __name__ == "__main__":
     # Load the diabetes dataset
-    df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv")
-    df = df[['Age','BMI', 'Outcome']]
-    X = df[['Age','BMI']]
-    y = df['Outcome']
+    df = pd.read_csv(
+        "https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv"
+    )
+    df = df[["Age", "BMI", "Outcome"]]
+    X = df[["Age", "BMI"]]
+    y = df["Outcome"]
 
     # Split the data into training and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.3, random_state=0
+    )
 
     # Create an instance of the logistic regression model
     model = LogisticRegression(max_iter=100)
@@ -30,6 +34,5 @@ if __name__ == "__main__":
     print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
 
     # save model
-    with open('model/model.pkl', mode='wb') as file:
+    with open("model/model.pkl", mode="wb") as file:
         joblib.dump(model, file)
-

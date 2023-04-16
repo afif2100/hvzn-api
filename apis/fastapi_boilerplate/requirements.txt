@@ -5,3 +5,4 @@ joblib
 numpy
 pandas
 scikit-learn
+loguru
